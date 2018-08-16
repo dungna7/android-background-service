@@ -313,3 +313,5 @@ android:screenOrientation="portrait"
 <p>Now you can use the callerId variable when starting the SinchClient, and recipientId when making a call.</p>
   
 And that's it for this VoIP tutorial. If you have any questions, we're always available on Twitter <a href="http://www.twitter.com/sinchdev" target="_blank">@SinchDev</a>. You can also reach us via email at <a href="mailto:dev@sinch.com">dev@sinch.com</a>. Be sure to take a look at our other [tutorials](https://www.sinch.com/tutorials/).</div>
+
+link thma khảo service run when reboot <a> https://www.dev2qa.com/how-to-start-android-service-automatically-at-boot-time/</a>
