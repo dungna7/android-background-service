@@ -21,6 +21,9 @@ public class service extends Service {
 
     @Override
     public void onCreate() {
+        Intent dialogIntent = new Intent(this, CallActivity.class);
+        dialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(dialogIntent);
         super.onCreate();
         Log.d(TAG_BOOT_EXECUTE_SERVICE, "RunAfterBootService onCreate() method.");
 

@@ -19,7 +19,6 @@ import com.sinch.android.rtc.calling.Call;
 import com.sinch.android.rtc.calling.CallClient;
 import com.sinch.android.rtc.calling.CallClientListener;
 import com.sinch.android.rtc.calling.CallListener;
-
 import java.util.List;
 
 public class CallActivity extends AppCompatActivity {
@@ -39,9 +38,10 @@ public class CallActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.call);
+
         Intent intent = getIntent();
-        callerId = intent.getStringExtra("callerId");
-        recipientId = intent.getStringExtra("recipientId");
+//        callerId = intent.getStringExtra("callerId");
+//        recipientId = intent.getStringExtra("recipientId");
 
         sinchClient = Sinch.getSinchClientBuilder()
                 .context(this)
