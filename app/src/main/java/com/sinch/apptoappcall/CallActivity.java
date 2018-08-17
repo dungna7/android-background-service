@@ -45,7 +45,7 @@ public class CallActivity extends AppCompatActivity {
 
         sinchClient = Sinch.getSinchClientBuilder()
                 .context(this)
-                .userId("b")
+                .userId("a")
                 .applicationKey(APP_KEY)
                 .applicationSecret(APP_SECRET)
                 .environmentHost(ENVIRONMENT)
@@ -64,7 +64,7 @@ public class CallActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (call == null) {
-                    call = sinchClient.getCallClient().callUser("a");
+                    call = sinchClient.getCallClient().callUser("b");
                     call.addCallListener(new SinchCallListener());
                     button.setText("Hang Up");
                 } else {
