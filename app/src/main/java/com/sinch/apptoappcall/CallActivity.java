@@ -1,16 +1,20 @@
 package com.sinch.apptoappcall;
 
+import android.Manifest;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.os.Bundle;
+import android.os.PowerManager;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import android.view.Window;
 import com.sinch.android.rtc.PushPair;
 import com.sinch.android.rtc.Sinch;
 import com.sinch.android.rtc.SinchClient;
@@ -33,10 +37,27 @@ public class CallActivity extends AppCompatActivity {
     private Button button;
     private String callerId;
     private String recipientId;
-
+    private PowerManager.WakeLock wl;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Intent startServiceIntent = new Intent(this, service.class);
+        this.startService(startServiceIntent);
+
+        ActivityCompat.requestPermissions(this,
+                new String[]{android.Manifest.permission.RECORD_AUDIO, Manifest.permission.READ_PHONE_STATE},
+                1);
+        PowerManager pm = (PowerManager) getSystemService(service.POWER_SERVICE);
+        wl = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "My Tag");
+        wl.acquire();
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN |
+                        WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED |
+                        WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN |
+                        WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED |
+                        WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
+
         setContentView(R.layout.call);
 
         Intent intent = getIntent();

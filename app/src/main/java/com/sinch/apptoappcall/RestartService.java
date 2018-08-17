@@ -51,7 +51,7 @@ public class RestartService extends BroadcastReceiver {
                 context.startService(startServiceIntent);
 
                 // Current thread will sleep one second.
-                Thread.sleep(10000);
+                Thread.sleep(1000);
             }
         }catch(InterruptedException ex)
         {

@@ -15,6 +15,8 @@ import com.sinch.android.rtc.calling.CallClient;
 import com.sinch.android.rtc.calling.CallClientListener;
 import com.sinch.android.rtc.calling.CallListener;
 import android.media.AudioManager;
+import android.view.WindowManager;
+import android.os.PowerManager;
 
 import java.util.List;
 
@@ -97,13 +99,17 @@ public class service extends Service {
     }
 
     private class SinchCallClientListener implements CallClientListener {
+
         @Override
         public void onIncomingCall(CallClient callClient, Call incomingCall) {
             call = incomingCall;
+
+
             String message = "chay app khi detect comming call";
             Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
             Intent dialogIntent = new Intent(service.this, CallActivity.class);
             dialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
             startActivity(dialogIntent);
             call.answer();
             call.addCallListener(new SinchCallListener());
