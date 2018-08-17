@@ -75,8 +75,8 @@ public class CallActivity extends AppCompatActivity {
         sinchClient.setSupportCalling(true);
         sinchClient.startListeningOnActiveConnection();
         sinchClient.start();
-
-        sinchClient.getCallClient().addCallClientListener(new SinchCallClientListener());
+//        bo cai nay khi call tren man hinh khong bi nhay nhay do call service 2 lan
+//        sinchClient.getCallClient().addCallClientListener(new SinchCallClientListener());
 
         button = (Button) findViewById(R.id.button);
         callState = (TextView) findViewById(R.id.callState);
