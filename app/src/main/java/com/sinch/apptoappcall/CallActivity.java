@@ -23,7 +23,15 @@ import com.sinch.android.rtc.calling.Call;
 import com.sinch.android.rtc.calling.CallClient;
 import com.sinch.android.rtc.calling.CallClientListener;
 import com.sinch.android.rtc.calling.CallListener;
+
+import org.json.JSONObject;
+
+import java.net.URISyntaxException;
 import java.util.List;
+
+import io.socket.client.IO;
+import io.socket.client.Socket;
+import io.socket.emitter.Emitter;
 
 public class CallActivity extends AppCompatActivity {
 
@@ -38,11 +46,12 @@ public class CallActivity extends AppCompatActivity {
     private String callerId;
     private String recipientId;
     private PowerManager.WakeLock wl;
+    private Socket mSocket;
+    private static final String URL = "http://192.168.77.39:3000";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Intent startServiceIntent = new Intent(this, service.class);
-        this.startService(startServiceIntent);
+
 
         ActivityCompat.requestPermissions(this,
                 new String[]{android.Manifest.permission.RECORD_AUDIO, Manifest.permission.READ_PHONE_STATE},
@@ -64,19 +73,57 @@ public class CallActivity extends AppCompatActivity {
 //        callerId = intent.getStringExtra("callerId");
 //        recipientId = intent.getStringExtra("recipientId");
 
-        sinchClient = Sinch.getSinchClientBuilder()
-                .context(this)
-                .userId("a")
-                .applicationKey(APP_KEY)
-                .applicationSecret(APP_SECRET)
-                .environmentHost(ENVIRONMENT)
-                .build();
-
-        sinchClient.setSupportCalling(true);
-        sinchClient.startListeningOnActiveConnection();
-        sinchClient.start();
-//        bo cai nay khi call tren man hinh khong bi nhay nhay do call service 2 lan
+//        sinchClient = Sinch.getSinchClientBuilder()
+//                .context(this)
+//                .userId("a")
+//                .applicationKey(APP_KEY)
+//                .applicationSecret(APP_SECRET)
+//                .environmentHost(ENVIRONMENT)
+//                .build();
+//
+//        sinchClient.setSupportCalling(true);
+//        sinchClient.startListeningOnActiveConnection();
+//        sinchClient.start();
+////        bo cai nay khi call tren man hinh khong bi nhay nhay do call service 2 lan
 //        sinchClient.getCallClient().addCallClientListener(new SinchCallClientListener());
+//        try {
+//            mSocket = IO.socket(URL);
+//        } catch (URISyntaxException e) {
+//            throw new RuntimeException(e);
+//        }
+//        ChatApplication app = (ChatApplication)getApplication();
+//        mSocket = app.getmSocket();
+//        mSocket.connect();
+//        if (mSocket.connected()){
+//            Toast.makeText(getApplicationContext(), "Connected!!",Toast.LENGTH_SHORT).show();
+//        }else {
+//            Toast.makeText(getApplicationContext(), "not Connect!",Toast.LENGTH_SHORT).show();
+//        }
+//        mSocket.emit("join","dungna1");
+//        mSocket.on("message", new Emitter.Listener() {
+//            @Override
+//            public void call(Object... args) {
+//                JSONObject data = (JSONObject)args[0];
+//here the data is in JSON Format
+//                Toast.makeText(getApplicationContext(), data.toString(), Toast.LENGTH_SHORT).show();
+//                String message = "chay app khi detect comming call";
+//                Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+//                Intent dialogIntent = new Intent(getApplicationContext(), CallActivity.class);
+//                dialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//
+//                startActivity(dialogIntent);
+//                runOnUiThread(new Runnable() {
+//                    @Override public void run() {
+//                        String message = "chay app tu call comming detected";
+//                        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+//                        Intent dialogIntent = new Intent(getApplicationContext(), CallActivity.class);
+//                        dialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//
+//                        startActivity(dialogIntent);
+//                    }
+//                });
+//            }
+//        });
 
         button = (Button) findViewById(R.id.button);
         callState = (TextView) findViewById(R.id.callState);
@@ -84,13 +131,17 @@ public class CallActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (call == null) {
-                    call = sinchClient.getCallClient().callUser("b");
-                    call.addCallListener(new SinchCallListener());
-                    button.setText("Hang Up");
-                } else {
-                    call.hangup();
-                }
+                Intent startServiceIntent = new Intent(getApplicationContext(), service.class);
+                getApplicationContext().startService(startServiceIntent);
+//                mSocket.emit("messagedetection","dungna1","detected comming call");
+//                if (call == null) {
+//
+//                    call = sinchClient.getCallClient().callUser("b");
+//                    call.addCallListener(new SinchCallListener());
+//                    button.setText("Hang Up");
+//                } else {
+//                    call.hangup();
+//                }
             }
         });
     }
